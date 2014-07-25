@@ -53,13 +53,7 @@
     End Sub
 
     Private Sub btn_send_Click(sender As System.Object, e As System.EventArgs) Handles btn_send.Click
-        If CNCComPort.IsOpen Then
-            Try
-                CNCComPort.WriteLine(tb_send.Text)
-            Catch ex As Exception
-                MsgBox(ex.Message)
-            End Try
-        End If
+        SendCommand()
     End Sub
 
     Private Sub btn_CloseComPort_Click(sender As System.Object, e As System.EventArgs) Handles btn_CloseComPort.Click
@@ -120,4 +114,22 @@
         End If
     End Sub
 
+    Private Sub tb_send_KeyPress(sender As Object, e As System.Windows.Forms.KeyPressEventArgs) Handles tb_send.KeyPress
+
+        If e.KeyChar = ChrW(Keys.Enter) Then
+            SendCommand()
+        End If
+
+    End Sub
+
+    Private Sub SendCommand()
+        If CNCComPort.IsOpen Then
+            Try
+                'CNCComPort.WriteLine(tb_send.Text)
+                CNCComPort.Write(tb_send.Text)
+            Catch ex As Exception
+                MsgBox(ex.Message)
+            End Try
+        End If
+    End Sub
 End Class
